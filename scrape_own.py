@@ -28,8 +28,12 @@ def create_custom_hn(links, subtext):
     if len(vote):#if valid ie len>0
       points = int(vote[0].getText().replace(' points', ''))#replace the empty value to a string wuth null value, so that no error is generated
       if points > 99:
-        hn.append({'title': title, 'link': href, 'votes': points})
+        hn.append({'Title': title, 'Link': href, 'Votes': points}) # Modified column names
   return sort_stories_by_votes(hn)
- 
-#pprint.pprint(create_custom_hn(mega_links, mega_subtext))
-pprint.pprint(create_custom_hn(links, subtext))
+
+# Create DataFrame
+data = create_custom_hn(links, subtext)
+df = pd.DataFrame(data)
+
+# Save DataFrame to Excel
+df.to_excel('hacker_news_data.xlsx', index=False)
